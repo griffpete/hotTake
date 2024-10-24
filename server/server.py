@@ -1,11 +1,18 @@
 from flask import Flask, request
-from dataBase import DummyDB
+from dataBase import postDB
 
 app = Flask(__name__)
-db = DummyDB("posts.db")
-subjects = DummyDB("subjects.db")
+
 #print("db", db.readAllRecords())
 #print("subjects:", subjects.readAllRecords())
+@app.route("/userPosts/<int:post_id>", methods=["OPTIONS"])
+def handle_cors_preflight(post_id):
+    return "", 204, {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "PUT, DELETE",
+        "Access-Control-Allow-Headers": "Content-Type"
+    }
+
 
 @app.route("/userPosts", methods=["GET"])
 def retrieve_posts():
