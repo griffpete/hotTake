@@ -1,0 +1,61 @@
+
+body {
+    font-family: "Jaini";
+    background-image: linear-gradient(#FFB600, #FF4800);
+    width: 99vw;
+    height: 84vh;
+}
+
+h1 {
+    font-size: 80pt;
+}
+
+input {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    width: 200px;
+    font-size: 16px;
+}
+
+input::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+input:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15vh;
+    
+    flex-direction: column;
+}
+
+#name-and-button {
+    margin-top: -10vh;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+#enter-button {
+    background-color: #6A040F;
+    font-family: "Jaini";
+    border: none;
+    color: white;
+    padding: 10px 32px;
+    text-align: center;
+  
+    font-size: 16px;
+    cursor: pointer;
+}
+  
+#enter-button:hover {
+    background-color: #9d0208; 
+}

@@ -1,0 +1,216 @@
+body {
+    font-family: "Jaini";
+    background-color: #FFF9F1;
+    width: 100vw;
+    height: 100vh;
+}
+
+#title {
+    font-size: 70pt;
+    font-family: "Jaini";
+    display: flex;
+    margin-left: 12vw;
+    margin-top: 2vh;
+    color: black;
+}
+
+#header {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.header-item {
+    display: flex;
+}
+
+#container {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    margin-top: -5rem;
+    
+    min-height: 100px;
+    width: 75vw;
+    height: 80vh;
+
+    background: rgb(217, 217, 217, 0.8);
+    border-radius: 5px;
+    overflow-y: auto;
+}
+
+#add-button {
+    float: right;    
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    align-items: center;
+    justify-self: right;
+
+    margin-right: 13vw;
+    margin-top: 11vh;
+
+    height: 2rem;
+}
+
+#add-button:hover {
+    color: #dc2f02;
+}
+
+#add-button p {
+    font-family:"Cantora One";
+    font-size: 20pt;
+}
+
+#plus-icon {
+    font-size: 32px;
+    opacity: 1;
+    --ionicon-stroke-width: 48px;
+}
+
+.post {
+    position:relative;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    
+    width: 67vw;
+    height: 20vh;
+
+    background: #D9D9D9;
+    outline: 2px solid #DC2F02;
+    border-radius: 10px;
+}
+
+.post-title {
+    font-family:"Cantora One";
+    font-size: 20pt;
+    color: #D00000;
+    margin-left: 3rem;
+    padding-top: 2rem;
+}
+
+.post-name {
+    font-family:"Cantora One";
+    font-size: 15pt;
+    color: black;
+    margin-left: 4rem;
+    margin-top: -1rem;
+}
+
+#blur {
+    display: none; 
+    backdrop-filter: blur(3px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+}
+
+#exit-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    align-items: center;
+    justify-self: right;
+    color: #D00000;
+    height: 2rem;
+    
+    position: fixed; 
+    left: 50%;
+    transform: translate(-50%, 0%);
+    margin-top: 21vh;
+    margin-left: 18vw;
+    z-index: 2;
+}
+
+#form {
+    display: none; 
+    position: fixed; 
+    left: 50%;
+    transform: translate(-50%, 0%);
+    margin-top: 10rem;
+
+    width: 40vw;
+    height: 30vh;
+    background-color: #9A9A9A; /* Semi-transparent overlay */
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+
+    display: flex;
+    flex-direction: row;  
+    flex-wrap: wrap;
+}
+
+hr {
+    border: none;
+}
+
+.form-child {
+    display: inline-block;
+}
+
+#subject-label {
+    font-size: 20pt;
+    color: #03071e;
+    margin-left: 2rem;
+}
+
+#subject {
+    font-family:"Cantora One";
+    color: #D00000;
+    font-size: 20pt;
+    margin-left: 2rem;
+    text-decoration: none;
+}
+
+#exit-button:hover {
+    color: #e85d04;
+}
+
+#exit-icon {
+    font-size: 32px;
+    opacity: 1;
+    --ionicon-stroke-width: 48px;
+}
+
+#hot-take-label {
+    margin-left: 2rem;
+    margin-top: -2rem;
+    font-size: 20pt;
+}
+
+#input-box {
+    font-family:"Cantora One";
+    height: 2rem;
+    width: 18rem;
+    min-width: 0;
+    max-width: 20rem;
+    border-radius: 5px;
+    border: none;
+    margin-left: 2rem;
+    margin-top: -2rem;
+}
+
+input::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+.bottom-buttons {
+    font-family:"Cantora One";
+    background-color:#D00000;
+    color: #D9D9D9;
+    border: none;
+    margin-left: 2rem;
+    height: 3rem;
+    width: 5rem;
+    
+}
+
+.bottom-buttons:hover {
+    background-color:#e85d04;
+}
