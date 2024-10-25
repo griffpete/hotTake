@@ -23,18 +23,39 @@ class postDB():
         self.cursor.execute("Select * FROM posts")
         return self.cursor.fetchall() 
 
-    def getOne(self, coaster_id):
-        data = [coaster_id] 
+    def getOne(self, post_id):
+        data = [post_id] 
         self.cursor.execute("Select * FROM posts WHERE id = ?", data) 
         return self.cursor.fetchone()
 
-    def create(self, name, review, rating):
-        data = [name, review, rating]
+    def create(self, name, subject, message):
+        data = [name, subject, message]
         self.cursor.execute("INSERT INTO posts (name, subject, message) VALUES (?,?,?)", data)
         self.connection.commit()
         return True
 
-    def update(self, coaster_id, name, review, rating):
-        data = [name, review, rating, coaster_id]
+    def update(self, post_id, name, subject, message):
+        data = [name, subject, message, post_id]
         self.cursor.execute("UPDATE posts SET name = ?, subject = ?, message = ? WHERE id = ?", data)
         self.connection.commit()
+
+class subjectsDB: 
+    def __init__(self, filename):
+        self.connection = sqlite3.connect(filename)
+        self.connection.row_factory = dict_factory
+        self.cursor = self.connection.cursor()   
+
+    def getAll(self):
+        self.cursor.execute("Select * FROM subjects")
+        return self.cursor.fetchall() 
+
+    def getOne(self, subject_id):
+        data = [subject_id] 
+        self.cursor.execute("Select * FROM subjects WHERE id = ?", data) 
+        return self.cursor.fetchone()
+
+    def create(self, subject):
+        data = [subject]
+        self.cursor.execute("INSERT INTO subjects (subject) VALUES (?)", data)
+        self.connection.commit()
+        return True

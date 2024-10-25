@@ -19,6 +19,19 @@ name TEXT NOT NULL,
 subject TEXT NOT NULL,
 message TEXT);
 ```
+**Subjects**
+
+Attributes:
+
+* subject (string) - Not Null
+
+## Schema
+
+```sql
+CREATE TABLE IF NOT EXISTS subjects (
+id INTEGER PRIMARY KEY,
+subject TEXT NOT NULL)
+```        
 
 ## REST Endpoints
 
