@@ -1,4 +1,4 @@
-# My Project
+# Project 4 - Resourceful
 
 ## Resource
 
@@ -19,6 +19,7 @@ name TEXT NOT NULL,
 subject TEXT NOT NULL,
 message TEXT);
 ```
+## Resource
 **Subjects**
 
 Attributes:
@@ -37,8 +38,9 @@ subject TEXT NOT NULL)
 
 Name                           | Method | Path
 -------------------------------|--------|------------------
-Retrieve post collection | GET    | /posts
-Retrieve post member     | GET    | /posts/*\<id\>*
-Create post member       | POST   | /posts
-Update post member       | PUT    | /posts/*\<id\>*
-Delete post member       | DELETE | /posts/*\<id\>*
+Retrieve post collection | GET    | /userPosts
+Retrieve post member     | GET    | /userPosts/*\<id\>*
+Create post member       | POST   | /userPosts
+Update post member       | PUT    | /userPosts/*\<id\>*
+Delete post member       | DELETE | /userPosts/*\<id\>*
+Retreive subject collection | GET | /subjects

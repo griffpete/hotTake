@@ -18,8 +18,8 @@ function showPost(data){
     let subject = document.createElement("h3");
     subject.classList.add("subject-title");
 
-    let postContent = document.createElement("input");
-    postContent.classList.add("post-input");
+    let postText = document.createElement("h3");
+    postText.classList.add("post-text");
     
     let buttonArea = document.createElement("div");
     buttonArea.classList.add("button-area"); 
@@ -27,22 +27,24 @@ function showPost(data){
     let editButton = document.createElement("ion-icon");
     editButton.name = "create";
     editButton.onclick = () => {
-        editPost(data, postContent.value)
+        editButton.style.color = "blue";
+        beginEdit(data, postArea, postText);
     };
     editButton.classList.add("edit-button");
 
     let deleteButton = document.createElement("ion-icon");
     deleteButton.name = "trash-bin";
     deleteButton.onclick = () => {
-        confirmDelete(data.id);
+        deleteButton.style.color = "red";
+        confirmDelete(data.id, postArea);
     };
     deleteButton.classList.add("delete-button");
 
     subject.textContent = data.subject;
-    postContent.placeholder = data.message;
+    postText.textContent = data.message;
 
     postArea.appendChild(subject);
-    postArea.appendChild(postContent);
+    postArea.appendChild(postText);
     buttonArea.appendChild(editButton);
     buttonArea.appendChild(deleteButton);
     postArea.appendChild(buttonArea);
@@ -58,6 +60,33 @@ function loadPostsFromServer() {
                 post.reverse().forEach(showPost);
             })
         })
+}
+
+function beginEdit(post, area, text){
+    let postContent = document.createElement("input");
+    postContent.classList.add("post-input");
+    postContent.placeholder = text.textContent;
+    area.replaceChild(postContent, text);
+    postContent.focus();
+    
+    let confirmButton = document.createElement("Button");
+    confirmButton.classList.add("confirm-button");
+    confirmButton.textContent = "Confirm";
+    confirmButton.style.display = "block";
+    confirmButton.onclick = () => {
+        editPost(post, postContent.value);
+    };
+
+    let cancelButton = document.createElement("Button");
+    cancelButton.classList.add("cancel-button");
+    cancelButton.textContent = "Cancel";
+    cancelButton.style.display = "block";
+    cancelButton.onclick = () => {
+        cancelAction();
+    };  
+
+    area.appendChild(cancelButton)
+    area.appendChild(confirmButton);
 }
 
 function editPost(post, newMessage){
@@ -82,13 +111,25 @@ function editPost(post, newMessage){
     })
 }
 
-function confirmDelete(post_id) {
-    const userConfirmed = window.confirm("Are you sure you want to delete this post?");
-    if (userConfirmed) {
-        deletePost(post_id); 
-    } else {
-        console.log("Deletion canceled."); 
-    }
+function confirmDelete(post_id, area) {
+    let confirmButton = document.createElement("Button");
+    confirmButton.classList.add("confirm-button");
+    confirmButton.textContent = "Confirm";
+    confirmButton.style.display = "block";
+    confirmButton.onclick = () => {
+        deletePost(post_id);
+    };  
+
+    let cancelButton = document.createElement("Button");
+    cancelButton.classList.add("cancel-button");
+    cancelButton.textContent = "Cancel";
+    cancelButton.style.display = "block";
+    cancelButton.onclick = () => {
+        cancelAction();
+    };  
+
+    area.appendChild(cancelButton)
+    area.appendChild(confirmButton);
 }
 
 function deletePost(post_id) {
@@ -99,6 +140,11 @@ function deletePost(post_id) {
         container.innerHTML = "";
         loadPostsFromServer();
     })
+}
+
+function cancelAction() {
+    container.innerHTML = "";
+    loadPostsFromServer();
 }
 
 sandwichIcon.addEventListener('click', () => {

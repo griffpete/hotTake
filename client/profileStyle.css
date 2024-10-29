@@ -102,7 +102,7 @@ ion-icon{
 }
 
 .delete-button:hover {
-    color: #D00000;
+    color: red;
 }
 
 .delete-button {
@@ -136,6 +136,19 @@ ion-icon{
     align-self: center;
 }
 
+.post-text {
+    font-family:"Cantora One";
+    height: 2rem;
+    width: 18rem;
+    min-width: 0;
+    max-width: 20rem;
+    border-radius: 5px;
+    border: none;
+    margin-left: 0.5rem;
+    margin-top: 2rem;
+    align-self: center;
+}
+
 .post-input {
     font-family:"Cantora One";
     height: 2rem;
@@ -144,7 +157,7 @@ ion-icon{
     max-width: 20rem;
     border-radius: 5px;
     border: none;
-    margin-left: 2rem;
+    margin-left: 0.5rem;
     align-self: center;
 }
 
@@ -155,4 +168,41 @@ input::placeholder {
 
 .button-area {
     margin-left: auto;
+}
+
+.confirm-button {
+    display: none;
+    font-family:"Cantora One";
+    background-color:#D00000;
+    color: #D9D9D9;
+    border: none;
+    border-radius: 1rem;
+    height: 3rem;
+    width: 5rem;
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+}
+
+.confirm-button:hover {
+    background-color:#e85d04;
+}
+
+.cancel-button {
+    display: none;
+    font-family:"Cantora One";
+    background-color:#c3bfbff1;
+    color: #605f5f;
+    border: none;
+    border-radius: 1rem;
+    height: 3rem;
+    width: 5rem;
+    position: absolute;
+    right: 7rem;
+    bottom: 1rem;
+}
+
+.cancel-button:hover {
+    background-color:#424242;
+    color: #c3bfbff1;
 }
