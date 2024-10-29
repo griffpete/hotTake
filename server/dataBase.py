@@ -39,6 +39,11 @@ class postDB():
         self.cursor.execute("UPDATE posts SET name = ?, subject = ?, message = ? WHERE id = ?", data)
         self.connection.commit()
 
+    def deleteOne(self, post_id):
+        data = [post_id]
+        self.cursor.execute("DELETE FROM posts WHERE id = ?", data)
+        self.connection.commit()
+
 class subjectsDB: 
     def __init__(self, filename):
         self.connection = sqlite3.connect(filename)

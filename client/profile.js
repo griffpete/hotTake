@@ -1,4 +1,3 @@
-const addButton = document.querySelector('#add-button');
 const newTopicButton = document.querySelector('#new-topic-button');
 const postButton = document.querySelector('#post-button');
 const form = document.querySelector('#form');
@@ -10,12 +9,15 @@ const username = sessionStorage.getItem("username");
 const exitForm = document.querySelector("#exit-button");
 const sandwichIcon = document.querySelector("#sandwich-icon");
 const sandwichMenu = document.querySelector("#sandwich-menu");
+const title = document.querySelector("#title");
 
 let subjects = [];
 let randomSubject = "";
+title.textContent = username;
 
 function showPost(data){    
     console.log(data)
+    if(data.name != username) {return}
     let postArea = document.createElement("section");
     postArea.classList.add("post"); 
 
@@ -43,18 +45,8 @@ function loadPostsFromServer() {
             })
         })
 }
-function getSubjects() {
-    fetch("http://localhost:5150/subjects")
-        .then(function(response){
-            response.json().then(function(data){
-                data.forEach((item) => {
-                    subjects.push(item.subject)
-                });
-            })
-        })
-}
 
-function sendPost(){
+function editPost(){
     console.log("button clicked");
     let nameData = "name=" + encodeURIComponent(username);
     let subjectData = "subject=" + encodeURIComponent(randomSubject);
@@ -63,7 +55,7 @@ function sendPost(){
     console.log("Data: ", data);
 
     fetch("http://localhost:5150/userPosts", {
-        method: "POST",
+        method: "PUT",
         body: data,
         headers: { "Content-Type": "application/x-www-form-urlencoded"}
     }).then(function(response){
@@ -75,43 +67,6 @@ function sendPost(){
     form.style.display = "none";
 }
 
-function createNewSubject() {
-    let randomIndex = Math.floor(Math.random() * subjects.length);
-    randomSubject = subjects[randomIndex]; 
-    subject.textContent = randomSubject;
-    inputBox.value = '';
-
-    if (randomSubject.endsWith('s')) {
-        inputBox.placeholder = `are...`;
-    } else {
-        inputBox.placeholder = `is...`;
-    }
-
-    subject.setAttribute('href', `https://www.google.com/search?q=${encodeURIComponent(randomSubject)}`);
-}
-
-function openForm() {
-    blurScreen.style.display = "block";
-    form.style.display = "block";
-    createNewSubject();
-}
-
-newTopicButton.addEventListener('click', (event) => {
-    createNewSubject();
-});
-
-exitForm.addEventListener('click', (event) => {
-    blurScreen.style.display = "none";
-    form.style.display = "none";
-});
-
-inputBox.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter' || event.keyCode === 13) {
-      event.preventDefault();
-      postButton.click();
-    }
-});
-
 sandwichIcon.addEventListener('click', () => {
     if (sandwichMenu.style.display === 'block') {
         sandwichMenu.style.display = 'none';
@@ -122,10 +77,8 @@ sandwichIcon.addEventListener('click', () => {
 
 inputBox.setAttribute('autocomplete', 'off');
 
-postButton.onclick = sendPost;
-addButton.onclick = openForm;
-
 document.addEventListener('DOMContentLoaded', () => {
     loadPostsFromServer();
-    getSubjects();
 });
+
+

@@ -1,5 +1,5 @@
 from flask import Flask, request
-from dataBase import postDB
+from dataBase import postDB, subjectsDB
 
 app = Flask(__name__)
 
@@ -13,25 +13,57 @@ def handle_cors_preflight(post_id):
         "Access-Control-Allow-Headers": "Content-Type"
     }
 
-
 @app.route("/userPosts", methods=["GET"])
 def retrieve_posts():
-    POSTS = db.readAllRecords()
+    db = postDB('server/posts.db')
+    POSTS = db.getAll()
     return POSTS, {"Access-Control-Allow-Origin": "*"}
+
+@app.route("/userPosts/<int:post_id>", methods=["GET"])
+def retrieve_one_post(post_id):
+    db = postDB('server/posts.db')
+    post = db.getOne(post_id)
+    if not post:
+        return f"Post with {post_id} not found", 404, {"Access-Control-Allow-Origin": "*"}
+    return post, {"Access-Control-Allow-Origin": "*"}
 
 @app.route("/subjects", methods=["GET"])
 def retrieve_subjects():
-    SUBJECTS = subjects.readAllRecords()
+    db = subjectsDB('server/subjects.db')
+    SUBJECTS = db.getAll()
     return SUBJECTS, {"Access-Control-Allow-Origin": "*"}
 
 @app.route("/userPosts", methods=["POST"])
 def create_posts():
     print("the request data is: ", request.form)
-    dataEntry = {"Name": request.form["name"],
-                "Subject":request.form["subject"],
-                "Message":request.form["message"]}
-    db.saveRecord(dataEntry)
+    name = request.form["name"]
+    subject = request.form["subject"]
+    message = request.form["message"]
+    db = postDB('server/posts.db')
+    db.create(name, subject, message)
     return "Created", 201, {"Access-Control-Allow-Origin": "*"}
+
+@app.route("/userPosts/<int:post_id>", methods=["PUT"])
+def update_post(post_id):
+    db = postDB('server/posts.db')
+    post = db.getOne(post_id)
+    if not post:
+        return f"Post with {post_id} not found", 404, {"Access-Control-Allow-Origin": "*"}
+    
+    name = request.form["name"]
+    subject = request.form["subject"]
+    message = request.form["message"]
+    db.update(post_id, name, subject, message)
+    return "Updated", 200, {"Access-Control-Allow-Origin": "*"}
+
+@app.route("/userPosts/<int:post_id>", methods=["DELETE"])
+def delete_post(post_id):
+    db = postDB('server/posts.db')
+    post = db.getOne(post_id)
+    if not post:
+        return f"Post with {post_id} not found", 404, {"Access-Control-Allow-Origin": "*"}
+    db.deleteOne(post_id)
+    return "Updated", 200, {"Access-Control-Allow-Origin": "*"}
 
 
 def run():
