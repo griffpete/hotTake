@@ -1,18 +1,12 @@
 const newTopicButton = document.querySelector('#new-topic-button');
-const postButton = document.querySelector('#post-button');
-const form = document.querySelector('#form');
-const blurScreen = document.querySelector('#blur');
 const container = document.querySelector('#container');
 const subject = document.querySelector('#subject');
-const inputBox = document.querySelector("#input-box");
 const username = sessionStorage.getItem("username");
-const exitForm = document.querySelector("#exit-button");
 const sandwichIcon = document.querySelector("#sandwich-icon");
 const sandwichMenu = document.querySelector("#sandwich-menu");
 const title = document.querySelector("#title");
 
 let subjects = [];
-let randomSubject = "";
 title.textContent = username;
 
 function showPost(data){    
@@ -21,17 +15,37 @@ function showPost(data){
     let postArea = document.createElement("section");
     postArea.classList.add("post"); 
 
-    let postContent = document.createElement("h3");
-    postContent.classList.add("post-title");
+    let subject = document.createElement("h3");
+    subject.classList.add("subject-title");
 
-    let name = document.createElement("p");
-    name.classList.add("post-name");
+    let postContent = document.createElement("input");
+    postContent.classList.add("post-input");
+    
+    let buttonArea = document.createElement("div");
+    buttonArea.classList.add("button-area"); 
 
-    postContent.textContent = `"` + data.subject + " " + data.message + `"` ;
-    name.textContent = "-" + data.name;
+    let editButton = document.createElement("ion-icon");
+    editButton.name = "create";
+    editButton.onclick = () => {
+        editPost(data, postContent.value)
+    };
+    editButton.classList.add("edit-button");
 
+    let deleteButton = document.createElement("ion-icon");
+    deleteButton.name = "trash-bin";
+    deleteButton.onclick = () => {
+        confirmDelete(data.id);
+    };
+    deleteButton.classList.add("delete-button");
+
+    subject.textContent = data.subject;
+    postContent.placeholder = data.message;
+
+    postArea.appendChild(subject);
     postArea.appendChild(postContent);
-    postArea.appendChild(name);
+    buttonArea.appendChild(editButton);
+    buttonArea.appendChild(deleteButton);
+    postArea.appendChild(buttonArea);
     container.appendChild(postArea);
 }
 
@@ -46,15 +60,18 @@ function loadPostsFromServer() {
         })
 }
 
-function editPost(){
-    console.log("button clicked");
-    let nameData = "name=" + encodeURIComponent(username);
-    let subjectData = "subject=" + encodeURIComponent(randomSubject);
-    let messageData = "message=" + encodeURIComponent(inputBox.value);
+function editPost(post, newMessage){
+    newMessage = newMessage.trim();
+    if (newMessage == "") {
+        return; 
+    }
+    
+    let nameData = "name=" + encodeURIComponent(post.name);
+    let subjectData = "subject=" + encodeURIComponent(post.subject);
+    let messageData = "message=" + encodeURIComponent(newMessage); //FIX ME
     let data = nameData + "&" + subjectData + "&" + messageData;
-    console.log("Data: ", data);
 
-    fetch("http://localhost:5150/userPosts", {
+    fetch("http://localhost:5150/userPosts/" + post.id, {
         method: "PUT",
         body: data,
         headers: { "Content-Type": "application/x-www-form-urlencoded"}
@@ -63,8 +80,25 @@ function editPost(){
         container.innerHTML = "";
         loadPostsFromServer();
     })
-    blurScreen.style.display = "none";
-    form.style.display = "none";
+}
+
+function confirmDelete(post_id) {
+    const userConfirmed = window.confirm("Are you sure you want to delete this post?");
+    if (userConfirmed) {
+        deletePost(post_id); 
+    } else {
+        console.log("Deletion canceled."); 
+    }
+}
+
+function deletePost(post_id) {
+    fetch("http://localhost:5150/userPosts/" + post_id, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/x-www-form-urlencoded"}
+    }).then(function(){
+        container.innerHTML = "";
+        loadPostsFromServer();
+    })
 }
 
 sandwichIcon.addEventListener('click', () => {
@@ -75,7 +109,7 @@ sandwichIcon.addEventListener('click', () => {
     }
 });
 
-inputBox.setAttribute('autocomplete', 'off');
+
 
 document.addEventListener('DOMContentLoaded', () => {
     loadPostsFromServer();
