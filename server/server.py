@@ -24,7 +24,7 @@ def retrieve_one_post(post_id):
     db = postDB('server/posts.db')
     post = db.getOne(post_id)
     if not post:
-        return f"Post with {post_id} not found", 404, {"Access-Control-Allow-Origin": "*"}
+        return f"Post with id {post_id} not found", 404, {"Access-Control-Allow-Origin": "*"}
     return post, {"Access-Control-Allow-Origin": "*"}
 
 @app.route("/subjects", methods=["GET"])
@@ -48,7 +48,7 @@ def update_post(post_id):
     db = postDB('server/posts.db')
     post = db.getOne(post_id)
     if not post:
-        return f"Post with {post_id} not found", 404, {"Access-Control-Allow-Origin": "*"}
+        return f"Post with id {post_id} not found", 404, {"Access-Control-Allow-Origin": "*"}
     
     name = request.form["name"]
     subject = request.form["subject"]
@@ -61,7 +61,7 @@ def delete_post(post_id):
     db = postDB('server/posts.db')
     post = db.getOne(post_id)
     if not post:
-        return f"Post with {post_id} not found", 404, {"Access-Control-Allow-Origin": "*"}
+        return f"Post with id {post_id} not found", 404, {"Access-Control-Allow-Origin": "*"}
     db.deleteOne(post_id)
     return "Updated", 200, {"Access-Control-Allow-Origin": "*"}
 

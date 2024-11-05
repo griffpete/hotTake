@@ -27,7 +27,7 @@ function showPost(data){
     let editButton = document.createElement("ion-icon");
     editButton.name = "create";
     editButton.onclick = () => {
-        editButton.style.color = "blue";
+        editButton.style.color = "rgb(2, 176, 219)";
         beginEdit(data, postArea, postText);
     };
     editButton.classList.add("edit-button");
@@ -35,7 +35,7 @@ function showPost(data){
     let deleteButton = document.createElement("ion-icon");
     deleteButton.name = "trash-bin";
     deleteButton.onclick = () => {
-        deleteButton.style.color = "red";
+        deleteButton.style.color = "rgb(220, 52, 6)";
         confirmDelete(data.id, postArea);
     };
     deleteButton.classList.add("delete-button");

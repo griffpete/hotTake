@@ -98,11 +98,11 @@ ion-icon{
 }
 
 .edit-button:hover {
-    color: blue;
+    color: rgb(2, 176, 219);
 }
 
 .delete-button:hover {
-    color: red;
+    color: rgb(220, 52, 6);
 }
 
 .delete-button {
