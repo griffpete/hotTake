@@ -6,6 +6,10 @@ const sandwichIcon = document.querySelector("#sandwich-icon");
 const sandwichMenu = document.querySelector("#sandwich-menu");
 const title = document.querySelector("#title");
 
+const apiUrl = window.location.protocol === 'file:'
+? 'http://localhost:8080' // Local API server for development
+: ''  // Production URL
+
 let subjects = [];
 title.textContent = username;
 
