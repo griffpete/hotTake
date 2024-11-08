@@ -14,6 +14,10 @@ const sandwichMenu = document.querySelector("#sandwich-menu");
 let subjects = [];
 let randomSubject = "";
 
+const apiUrl = window.location.protocol === 'file:'
+? 'http://localhost:5150' // Local API server for development
+: '';  // Production URL
+
 function showPost(data){    
     console.log(data)
     let postArea = document.createElement("section");
@@ -34,7 +38,7 @@ function showPost(data){
 }
 
 function loadPostsFromServer() {
-    fetch("http://localhost:5150/userPosts")
+    fetch(apiUrl + "/userPosts")
         .then(function(response){
             response.json().then(function(data){
                 //console.log(data);
@@ -44,7 +48,7 @@ function loadPostsFromServer() {
         })
 }
 function getSubjects() {
-    fetch("http://localhost:5150/subjects")
+    fetch(apiUrl + "/subjects")
         .then(function(response){
             response.json().then(function(data){
                 data.forEach((item) => {
@@ -62,7 +66,7 @@ function sendPost(){
     let data = nameData + "&" + subjectData + "&" + messageData;
     console.log("Data: ", data);
 
-    fetch("http://localhost:5150/userPosts", {
+    fetch(apiUrl + "/userPosts", {
         method: "POST",
         body: data,
         headers: { "Content-Type": "application/x-www-form-urlencoded"}

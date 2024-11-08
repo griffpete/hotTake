@@ -7,8 +7,8 @@ const sandwichMenu = document.querySelector("#sandwich-menu");
 const title = document.querySelector("#title");
 
 const apiUrl = window.location.protocol === 'file:'
-? 'http://localhost:8080' // Local API server for development
-: ''  // Production URL
+? 'http://localhost:5150' // Local API server for development
+: '';  // Production URL
 
 let subjects = [];
 title.textContent = username;
@@ -56,7 +56,7 @@ function showPost(data){
 }
 
 function loadPostsFromServer() {
-    fetch("http://localhost:5150/userPosts")
+    fetch(apiUrl + "/userPosts")
         .then(function(response){
             response.json().then(function(data){
                 //console.log(data);
@@ -104,7 +104,7 @@ function editPost(post, newMessage){
     let messageData = "message=" + encodeURIComponent(newMessage); //FIX ME
     let data = nameData + "&" + subjectData + "&" + messageData;
 
-    fetch("http://localhost:5150/userPosts/" + post.id, {
+    fetch(apiUrl + "/userPosts/" + post.id, {
         method: "PUT",
         body: data,
         headers: { "Content-Type": "application/x-www-form-urlencoded"}
@@ -137,7 +137,7 @@ function confirmDelete(post_id, area) {
 }
 
 function deletePost(post_id) {
-    fetch("http://localhost:5150/userPosts/" + post_id, {
+    fetch(apiUrl + "/userPosts/" + post_id, {
         method: "DELETE",
         headers: { "Content-Type": "application/x-www-form-urlencoded"}
     }).then(function(){
