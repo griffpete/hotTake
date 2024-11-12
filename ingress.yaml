@@ -1,0 +1,41 @@
+# Ingress for the backend service
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: planner-ingress-backend
+  annotations:
+    projectcontour.io/rewrite-target: /$2  # Adjust this if you are using a path prefix like /backend
+spec:
+  rules:
+    - host: yomi.keatonhall.com
+      http:
+        paths:
+          - path: /userPosts
+            pathType: Prefix
+            backend:
+              service:
+                name: backend-service
+                port:
+                  number: 5150
+          - path: /userPosts/
+            pathType: Prefix
+            backend:
+              service:
+                name: backend-service
+                port:
+                  number: 5150
+
+          - path: /subjects
+            pathType: Prefix
+            backend:
+              service:
+                name: backend-service
+                port:
+                  number: 5150
+          - path: /subjects/
+            pathType: Prefix
+            backend:
+              service:
+                name: backend-service
+                port:
+                  number: 5150

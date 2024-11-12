@@ -44,3 +44,20 @@ Create post member       | POST   | /userPosts
 Update post member       | PUT    | /userPosts/*\<id\>*
 Delete post member       | DELETE | /userPosts/*\<id\>*
 Retreive subject collection | GET | /subjects
+
+## Deployment Instructions
+
+### Building and Pushing Docker Images
+1. Frontend:
+   ```bash
+   docker build -t <your-dockerhub-username>/hottake-frontend:latest -f frontend/Dockerfile .
+   docker push <your-dockerhub-username>/hottake-frontend:latest
+
+2. backend
+docker build -t <your-dockerhub-username>/hottake-backend:latest -f backend/Dockerfile .
+docker push <your-dockerhub-username>/hottake-backend:latest
+
+## Deploying to Kubernetes
+kubectl apply -f frontend-deployment.yaml
+kubectl apply -f backend-deployment.yaml
+kubectl apply -f ingress.yaml
